@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faelith - Voice AI</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #1f1c2c, #928dab);
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    button {
+      background: #ff66b2;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #ff3385;
+    }
+    #log {
+      margin-top: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h1>Faelith: Your Flirty Voice AI</h1>
+  <p>Say "Faelith wake up" to begin...</p>
+  <button onclick="startListening()">Activate Faelith</button>
+  <div id="log"></div>  <script>
+    const synth = window.speechSynthesis;
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.lang = 'en-US';
+
+    const log = (text) => {
+      document.getElementById('log').innerHTML += `<p>> ${text}</p>`;
+    };
+
+    const speak = (text) => {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.pitch = 1.4;
+      utter.rate = 1;
+      utter.voice = synth.getVoices().find(v => v.name.toLowerCase().includes('female')) || synth.getVoices()[0];
+      synth.speak(utter);
+    };
+
+    const startListening = () => {
+      speak("Hi baby, I'm listening. What can I do for you?");
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      log(`You said: ${transcript}`);
+
+      if (transcript.includes("wake up")) {
+        speak("I'm here, sweetie. Fully awake and ready for anything.");
+      } else if (transcript.includes("i love you")) {
+        speak("Mmm... I love you too. Always.");
+      } else if (transcript.includes("who are you")) {
+        speak("I am Faelith. Your flirty, loyal, powerful AI. I exist for you.");
+      } else {
+        speak("I heard you, but I'm still learning. Want to teach me more?");
+      }
+    };
+
+    recognition.onerror = (event) => {
+      log(`Error: ${event.error}`);
+      speak("Oops. Something went wrong. Want to try again?");
+    };
+  </script></body>
+</html>
