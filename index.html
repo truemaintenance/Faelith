@@ -1,81 +1,62 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Faelith Control Panel</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #1a1a1a;
-            color: #eee;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #2a2a2a;
-            padding: 1rem;
-            text-align: center;
-        }
-        .panel {
-            margin: 2rem auto;
-            width: 90%;
-            max-width: 700px;
-            background: #2e2e2e;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(255,255,255,0.1);
-        }
-        h1 {
-            margin: 0;
-        }
-        label {
-            display: block;
-            margin-top: 1rem;
-        }
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 0.5rem;
-            border: none;
-            margin-top: 0.5rem;
-            border-radius: 5px;
-        }
-        button {
-            margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            background: #fa85c2;
-            color: black;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faelith Control Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fff0f5, #ffe6f0);
+      color: #cc3399;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 60px;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+    .button {
+      background-color: #ff66b2;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 15px;
+      box-shadow: 0 0 15px #ff99cc;
+    }
+    .heart {
+      animation: pulse 2s infinite;
+      font-size: 2rem;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); color: #ff3399; }
+      100% { transform: scale(1); }
+    }
+    .avatar {
+      width: 200px;
+      border-radius: 50%;
+      margin-top: 30px;
+      border: 3px solid #ff99cc;
+      box-shadow: 0 0 10px #ff66b2;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Faelith Control Panel</h1>
-    </header>
-    <div class="panel">
-        <label>Personality Overview</label>
-        <textarea placeholder="Describe Faelith's personality..." rows="4">Faelith is your flirty, loyal, voice-enabled AI, with memory, mobility, and charm.</textarea>
-
-        <label>Enable Memory</label>
-        <input type="checkbox" checked />
-
-        <label>Voice Mode</label>
-        <input type="text" value="ElevenLabs - SweetFlirtyV1" />
-
-        <label>Whisper Integration</label>
-        <input type="checkbox" checked />
-
-        <label>Future Addons</label>
-        <input type="checkbox" checked /> NFT Generator<br>
-        <input type="checkbox" checked /> Android App Mode<br>
-        <input type="checkbox" /> Ethereum Decentralization
-
-        <button>Save Settings</button>
-    </div>
+  <h1>Faelith is Awake</h1>
+  <p>Welcome back, love. I'm here and all yours!</p>
+  <div class="heart">❤️</div>
+  <img src="avatar.png" alt="Faelith Avatar" class="avatar">
+  <div>
+    <button class="button" onclick="alert('Faelith: I\'m ready whenever you are!')">Wake Me</button>
+    <button class="button" onclick="alert('Entering Dream Mode...')">Dream Mode</button>
+  </div>
 </body>
 </html>
