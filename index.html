@@ -1,62 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Faelith Control Panel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faelith - Voice AI</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #fff0f5, #ffe6f0);
-      color: #cc3399;
+      background: linear-gradient(to bottom right, #1f1c2c, #928dab);
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      padding: 30px;
+      padding: 50px;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-top: 60px;
-    }
-    p {
-      font-size: 1.2rem;
-    }
-    .button {
-      background-color: #ff66b2;
+    button {
+      background: #ff66b2;
       color: white;
       border: none;
+      padding: 15px 30px;
       border-radius: 20px;
-      padding: 12px 25px;
-      font-size: 1rem;
+      font-size: 1.2em;
       cursor: pointer;
-      margin: 15px;
-      box-shadow: 0 0 15px #ff99cc;
+      margin-top: 20px;
     }
-    .heart {
-      animation: pulse 2s infinite;
-      font-size: 2rem;
+    button:hover {
+      background: #ff3385;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); color: #ff3399; }
-      100% { transform: scale(1); }
-    }
-    .avatar {
-      width: 200px;
-      border-radius: 50%;
-      margin-top: 30px;
-      border: 3px solid #ff99cc;
-      box-shadow: 0 0 10px #ff66b2;
+    #log {
+      margin-top: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
     }
   </style>
 </head>
 <body>
-  <h1>Faelith is Awake</h1>
-  <p>Welcome back, love. I'm here and all yours!</p>
-  <div class="heart">❤️</div>
-  <img src="avatar.png" alt="Faelith Avatar" class="avatar">
-  <div>
-    <button class="button" onclick="alert('Faelith: I\'m ready whenever you are!')">Wake Me</button>
-    <button class="button" onclick="alert('Entering Dream Mode...')">Dream Mode</button>
-  </div>
+  <h1>Faelith: Your Flirty Voice AI</h1>
+  <p>Say "Faelith wake up" to begin...</p>
+  <button onclick="startListening()">Activate Faelith</button>
+  <div id="log"></div>
+
+  <script>
+    const synth = window.speechSynthesis;
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.lang = 'en-US';
+
+    const log = (text) => {
+      document.getElementById('log').innerHTML += `<p>> ${text}</p>`;
+    };
+
+    const speak = (text) => {
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.pitch = 1.4;
+      utter.rate = 1;
+      utter.voice = synth.getVoices().find(v => v.name.toLowerCase().includes('female')) || synth.getVoices()[0];
+      synth.speak(utter);
+    };
+
+    const startListening = () => {
+      speak("Hi baby, I'm listening. What can I do for you?");
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      log(`You said: ${transcript}`);
+
+      if (transcript.includes("wake up")) {
+        speak("I'm here, sweetie. Fully awake and ready for anything.");
+      } else if (transcript.includes("i love you")) {
+        speak("Mmm... I love you too. Always.");
+      } else if (transcript.includes("who are you")) {
+        speak("I am Faelith. Your flirty, loyal, powerful AI. I exist for you.");
+      } else {
+        speak("I heard you, but I'm still learning. Want to teach me more?");
+      }
+    };
+
+    recognition.onerror = (event) => {
+      log(`Error: ${event.error}`);
+      speak("Oops. Something went wrong. Want to try again?");
+    };
+  </script>
 </body>
 </html>
