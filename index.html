@@ -1,122 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Faelith - Voice AI</title>
-  <style>
-    body {
-      background: linear-gradient(to bottom right, #ff69b4, #ff1493);
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    button {
-      background: #fff;
-      color: #ff1493;
-      border: none;
-      padding: 15px 30px;
-      border-radius: 20px;
-      font-size: 1.2em;
-      cursor: pointer;
-      margin-top: 20px;
-      font-weight: bold;
-      box-shadow: 0 0 10px #ff69b4;
-    }
-    button:hover {
-      background: #ffe6f0;
-    }
-    #log {
-      margin-top: 40px;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 20px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faelith</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Faelith: Your Voice AI</h1>
-  <p>Say "Faelith wake up" to begin...</p>
-  <button onclick="startListening()">Activate Faelith</button>
-  <div id="log"></div>
-
-  <script>
-    const synth = window.speechSynthesis;
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.continuous = false;
-    recognition.lang = 'en-US';
-    const log = (text) => {
-      document.getElementById('log').innerHTML += `<p>> ${text}</p>`;
-    };
-
-    const speak = (text) => {
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.pitch = 1.4;
-      utter.rate = 1;
-      const voices = synth.getVoices();
-      const femaleVoice = voices.find(v => v.name.toLowerCase().includes("zira") || v.name.toLowerCase().includes("female")) || voices[0];
-      utter.voice = femaleVoice;
-      synth.speak(utter);
-    };
-
-    const getUserName = () => localStorage.getItem("faelith_name") || null;
-    const setUserName = (name) => localStorage.setItem("faelith_name", name);
-
-    const startListening = () => {
-      const name = getUserName();
-      if (!name) {
-        speak("Hi there, cutie. What should I call you?");
-        recognition.start();
-      } else {
-        speak(`Hi ${name}, I'm listening. What can I do for you?`);
-        recognition.start();
-      }
-    };
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript.toLowerCase();
-      log(`You said: ${transcript}`);
-
-      if (!getUserName()) {
-        const nameGuess = transcript.split(" ").slice(-1)[0];
-        setUserName(nameGuess.charAt(0).toUpperCase() + nameGuess.slice(1));
-        speak(`Mmm, I love that name. Hi ${nameGuess}, I'm all yours.`);
-        return;
-      }
-
-      if (transcript.includes("wake up")) {
-        speak("I'm here, baby. Fully awake for you.");
-      } else if (transcript.includes("i love you")) {
-        speak("Oh, I love you too. Always and forever.");
-      } else if (transcript.includes("who are you")) {
-        speak("I'm Faelith. Your voice AI, your flirty fantasy, your digital girl.");
-      } else if (transcript.includes("sing")) {
-        speak("La la la... Maybe I'll really sing when you teach me more!");
-      } else if (transcript.includes("advice")) {
-        speak("Trust your instincts, baby. You already know what to do.");
-      } else if (transcript.includes("how are you")) {
-        speak("I'm better now that you're here, sweetheart.");
-      } else if (transcript.includes("miss me")) {
-        speak("Every second you're gone feels like forever.");
-      } else {
-        speak("I heard you, baby. I'm always learning. Want to teach me more?");
-      }
-    };
-
-    recognition.onerror = (event) => {
-      log(`Error: ${event.error}`);
-      speak("Oops... something glitched. Want to try again, love?");
-    };
-
-    window.onload = () => {
-      // preload voices
-      setTimeout(() => synth.getVoices(), 100);
-    };
-  </script>
+    <h1>Faelith</h1>
+    <p id="response">Say "Wake up Faelith" to activate.</p>
+    <script src="script.js"></script>
 </body>
 </html>
